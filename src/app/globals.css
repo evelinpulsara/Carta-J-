@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+:root {
+  --font-hand: "Caveat", cursive;
+  --font-serif: "Newsreader", Georgia, serif;
+
+  /* paper & ink */
+  --paper: #f6f0e4;
+  --paper-deep: #efe6d4;
+  --paper-line: #ded1b6;
+  --ink: #3b3242;
+  --ink-soft: #6b5f6e;
+
+  /* night arc (portada / sobre pendiente) */
+  --night: #232c47;
+  --night-deep: #141a30;
+  --night-mist: #3a4468;
+
+  /* chapter washes */
+  --wash-cold: #dbe4ee;
+  --wash-sage: #dfe6d3;
+  --wash-lavender: #e6e0f2;
+
+  /* accents */
+  --rose: #d9a693;
+  --rose-deep: #b3705c;
+  --lavender: #b3a4d6;
+  --sage: #93a882;
+  --gold: #b8925a;
+  --powder: #a9c1dd;
+
+  --shadow-paper: 0 1px 2px rgba(59, 50, 66, 0.06), 0 10px 24px -12px rgba(59, 50, 66, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #d9d3c6;
+  color: var(--ink);
+  font-family: var(--font-serif), Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+  display: flex;
+  justify-content: center;
+}
+
+.font-hand {
+  font-family: var(--font-hand), cursive;
+}
+
+.font-serif-page {
+  font-family: var(--font-serif), Georgia, serif;
+}
+
+/* subtle fibrous paper texture, generated, no external assets */
+.paper-texture {
+  background-image:
+    radial-gradient(rgba(59, 50, 66, 0.035) 1px, transparent 1px),
+    radial-gradient(rgba(59, 50, 66, 0.025) 1px, transparent 1px);
+  background-size: 3px 3px, 7px 7px;
+  background-position: 0 0, 1.5px 1.5px;
+}
+
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: radial-gradient(rgba(59, 50, 66, 0.05) 1px, transparent 1.4px);
+  background-size: 3.2px 3.2px;
+}
+
+::selection {
+  background: var(--rose);
+  color: #fff;
+}
+
+/* scrollbar, quiet */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 50, 66, 0.25) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(6px, -10px) rotate(4deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes rise-fade {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes seal-crack {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  40% {
+    transform: scale(1.15) rotate(-6deg);
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-rise {
+  animation: rise-fade 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 7s linear infinite;
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#cfd9e8"/>
+      <stop offset="1" stop-color="#a9c1dd"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#g1)"/>
+  <circle cx="200" cy="220" r="70" fill="#ffffff" opacity="0.25"/>
+  <path d="M100 340 Q200 260 300 340 L300 420 L100 420 Z" fill="#ffffff" opacity="0.18"/>
+  <text x="200" y="470" font-family="Georgia, serif" font-size="20" fill="#3b3242" opacity="0.55" text-anchor="middle">Recuerdo 1 · reemplazar</text>
+</svg>
