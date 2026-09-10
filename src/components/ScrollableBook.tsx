@@ -23,6 +23,7 @@ import {
   pendingEnvelopeIntro,
   pendingEnvelopeReveal,
 } from "@/data/content";
+import { songsThatRemindMeOfYou, songsThatHelpedMeLetGo, Song } from "@/data/songs";
 
 /* ─── renderText: convierte **bold** en <strong> ──────────── */
 
@@ -194,7 +195,7 @@ function MusicPlayer() {
         className="font-hand text-[15px] tracking-widest uppercase mb-6 relative z-10"
         style={{ color: "var(--powder)", opacity: 0.7, letterSpacing: "0.18em" }}
       >
-        ♪ nuestra canción
+        ♪ Reproduce antes de leer
       </p>
 
       <audio
@@ -463,11 +464,10 @@ function TableOfContents() {
         {chapters.map((c) => (
           <li key={c.id}>
             <div
-              className={`w-full text-left rounded-lg border px-4 py-3.5 ${
-                c.locked
+              className={`w-full text-left rounded-lg border px-4 py-3.5 ${c.locked
                   ? "border-[var(--rose-deep)]/30"
                   : "border-[var(--paper-line)]"
-              }`}
+                }`}
               style={{
                 background: c.locked
                   ? "linear-gradient(135deg, #f2e2dd, #ecd6cf)"
@@ -507,11 +507,11 @@ function TableOfContents() {
 /* ─── Sección de carta genérica ────────────────────────────── */
 
 const tintBg: Record<string, string> = {
-  none:     "var(--paper)",
-  cold:     "linear-gradient(180deg, var(--wash-cold), var(--paper) 55%)",
-  sage:     "linear-gradient(180deg, var(--wash-sage), var(--paper) 55%)",
+  none: "var(--paper)",
+  cold: "linear-gradient(180deg, var(--wash-cold), var(--paper) 55%)",
+  sage: "linear-gradient(180deg, var(--wash-sage), var(--paper) 55%)",
   lavender: "linear-gradient(180deg, var(--wash-lavender), var(--paper) 55%)",
-  night:    "linear-gradient(180deg, var(--night-deep), var(--night) 70%)",
+  night: "linear-gradient(180deg, var(--night-deep), var(--night) 70%)",
 };
 
 function LetterSection({
@@ -545,9 +545,8 @@ function LetterSection({
       <div className="max-w-[42ch] mx-auto">
         <p className="font-hand text-xl text-[var(--ink-soft)] mb-1">{number}</p>
         <h2
-          className={`font-hand text-[var(--ink)] mb-7 leading-tight ${
-            quiet ? "text-2xl" : "text-3xl"
-          }`}
+          className={`font-hand text-[var(--ink)] mb-7 leading-tight ${quiet ? "text-2xl" : "text-3xl"
+            }`}
         >
           {title}
         </h2>
@@ -672,6 +671,130 @@ function EnvelopeSection() {
   );
 }
 
+/* ─── Canciones ────────────────────────────────────────────── */
+
+function SongRow({ song }: { song: Song }) {
+  return (
+    <li
+      className="flex items-center gap-3 py-3 border-b last:border-0"
+      style={{ borderColor: "var(--paper-line)" }}
+    >
+      <svg
+        width="15" height="15" viewBox="0 0 24 24" fill="none"
+        className="shrink-0"
+        style={{ color: "var(--ink-soft)" }}
+      >
+        <circle cx="7" cy="18" r="2.5" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M9.5 18V6l9-2v11" stroke="currentColor" strokeWidth="1.4" />
+      </svg>
+      <div className="min-w-0 flex-1">
+        <p className="font-serif-page text-[15px] truncate" style={{ color: "var(--ink)" }}>
+          {song.title}
+        </p>
+        <p className="font-serif-page italic text-[12.5px] truncate" style={{ color: "var(--ink-soft)" }}>
+          {song.artist}
+        </p>
+      </div>
+    </li>
+  );
+}
+
+function SongsSection() {
+  const { ref, visible } = useFadeIn();
+  return (
+    <section
+      ref={ref}
+      className="relative w-full px-6 pt-20 pb-16 paper-texture"
+      style={{
+        background: "linear-gradient(180deg, var(--wash-lavender), var(--paper) 55%)",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(24px)",
+        transition: "opacity 0.7s ease, transform 0.7s ease",
+      }}
+    >
+      <WashiTape className="top-10 left-6" color="var(--lavender)" rotate={-6} />
+      <WashiTape className="top-10 right-8" color="var(--powder)" rotate={5} />
+
+      <div className="max-w-[42ch] mx-auto">
+        {/* Cabecera */}
+        <p className="font-hand text-xl text-[var(--ink-soft)] mb-1">08</p>
+        <h2 className="font-hand text-3xl text-[var(--ink)] mb-2 leading-tight">
+          Nuestra banda sonora
+        </h2>
+        <p
+          className="font-serif-page italic text-[14px] mb-8"
+          style={{ color: "var(--ink-soft)" }}
+        >
+          Hay canciones que no hablan de ti,{" "}
+          <br />pero inevitablemente me recuerdan a ti.
+        </p>
+
+        {/* Lista: las que me recuerdan a él */}
+        <div
+          className="rounded-xl p-4 mb-6"
+          style={{
+            background: "rgba(255,255,255,0.5)",
+            boxShadow: "var(--shadow-paper)",
+          }}
+        >
+          <h3
+            className="font-hand text-2xl mb-1"
+            style={{ color: "var(--ink)" }}
+          >
+            Las que me recuerdan a ti
+          </h3>
+          <p
+            className="font-serif-page italic text-[12.5px] mb-3"
+            style={{ color: "var(--ink-soft)" }}
+          >
+            cada una tiene una historia
+          </p>
+          <ul>
+            {songsThatRemindMeOfYou.map((s, i) => (
+              <SongRow key={i} song={s} />
+            ))}
+          </ul>
+        </div>
+
+        {/* Lista: las que me ayudaron a soltar */}
+        <div
+          className="rounded-xl p-4"
+          style={{
+            background: "rgba(255,255,255,0.5)",
+            boxShadow: "var(--shadow-paper)",
+          }}
+        >
+          <h3
+            className="font-hand text-2xl mb-1"
+            style={{ color: "var(--ink)" }}
+          >
+            Las que me ayudaron a seguir
+          </h3>
+          <p
+            className="font-serif-page italic text-[12.5px] mb-3"
+            style={{ color: "var(--ink-soft)" }}
+          >
+            sanar también tiene su soundtrack
+          </p>
+          <ul>
+            {songsThatHelpedMeLetGo.map((s, i) => (
+              <SongRow key={i} song={s} />
+            ))}
+          </ul>
+        </div>
+
+        {/* Cierre poético */}
+        <p
+          className="font-hand text-lg text-center mt-8"
+          style={{ color: "var(--ink-soft)" }}
+        >
+          …y a veces la música dice lo que las palabras no pueden
+        </p>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Componente principal ─────────────────────────────────── */
 
 export default function ScrollableBook() {
@@ -756,7 +879,10 @@ export default function ScrollableBook() {
           tint="sage"
         />
 
-        {/* 08 · Aclaración — sobre interactivo */}
+        {/* 08 · Canciones */}
+        <SongsSection />
+
+        {/* 09 · Aclaración — sobre interactivo */}
         <EnvelopeSection />
       </main>
     </>
