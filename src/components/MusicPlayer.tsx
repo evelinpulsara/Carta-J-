@@ -53,8 +53,8 @@ export default function MusicPlayer({ onContinue }: { onContinue: () => void }) 
 
   return (
     <Paper tint="lavender" className="px-5 pt-24 pb-16">
-      <p className="font-hand text-xl text-[var(--ink-soft)] mb-1">06</p>
-      <h2 className="font-hand text-3xl text-[var(--ink)] mb-3">Nuestra banda sonora</h2>
+      <p className="font-hand text-xl text-[var(--ink-soft)] mb-1">𐔌՞ ܸ.ˬ.ܸ՞𐦯</p>
+      <h2 className="font-hand text-3xl text-[var(--ink)] mb-3">Canciones que me recordaron a ti</h2>
       <p className="font-serif-page text-[16px] leading-relaxed text-[var(--ink)] mb-6">
         Hay canciones que no hablan de ti, pero inevitablemente me recuerdan a ti.
         Y hubo otras que simplemente estuvieron conmigo mientras aprendía a soltarte.
