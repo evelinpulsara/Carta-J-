@@ -1,50 +1,90 @@
 @import "tailwindcss";
 
+/* ══════════════════════════════════════════════
+   PALETA NOCTURNA — azul-noche / lavanda / morado
+   ══════════════════════════════════════════════ */
+
 :root {
   --font-hand: "Caveat", cursive;
   --font-serif: "Newsreader", Georgia, serif;
 
-  /* paper & ink */
-  --paper: #f6f0e4;
-  --paper-deep: #efe6d4;
-  --paper-line: #ded1b6;
-  --ink: #3b3242;
-  --ink-soft: #6b5f6e;
+  /* ── Fondos (profundidad escalonada) ── */
+  --night-base:   #0d1117;
+  --night-deep:   #070916;
+  --night:        #121833;
+  --night-mid:    #181f42;
+  --night-soft:   #1d254f;
+  --night-mist:   #262f63;
+  --night-rise:   #2e3875;
 
-  /* night arc (portada / sobre pendiente) */
-  --night: #232c47;
-  --night-deep: #141a30;
-  --night-mist: #3a4468;
+  /* ── Texto (refinado para mayor contraste WCAG AA) ── */
+  --text:         #e4e8fb;
+  --text-soft:    #9ba5c9;
+  --text-muted:   #606a90;
 
-  /* chapter washes */
-  --wash-cold: #dbe4ee;
-  --wash-sage: #dfe6d3;
-  --wash-lavender: #e6e0f2;
+  /* ── Acentos ── */
+  --lavender:     #c1b1e6;
+  --lavender-dim: #877aae;
+  --lavender-glow:#d4c2f0;
+  --powder:       #89c1ef;
+  --powder-dim:   #5082b8;
+  --rose:         #c4829a;
+  --rose-deep:    #8f5470;
+  --gold:         #c4a96a;
+  --sage:         #6a94a0;
 
-  /* accents */
-  --rose: #d9a693;
-  --rose-deep: #b3705c;
-  --lavender: #b3a4d6;
-  --sage: #93a882;
-  --gold: #b8925a;
-  --powder: #a9c1dd;
+  /* ── Glassmorphism (consistentes en todo el sitio) ── */
+  --glass-bg:     rgba(255, 255, 255, 0.045);
+  --glass-bg-strong: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(169, 193, 221, 0.15);
+  --glass-border-strong: rgba(169, 193, 221, 0.22);
+  --glass-blur:   blur(12px);
+  --glass-blur-strong: blur(18px);
 
-  --shadow-paper: 0 1px 2px rgba(59, 50, 66, 0.06), 0 10px 24px -12px rgba(59, 50, 66, 0.35);
+  /* ── Tarjetas ── */
+  --card:         rgba(255, 255, 255, 0.04);
+  --card-border:  rgba(255, 255, 255, 0.08);
+  --card-hover:   rgba(255, 255, 255, 0.07);
+
+  /* ── Retrocompatibilidad con estilos existentes ── */
+  --paper:        var(--night-mid);
+  --paper-deep:   var(--night-soft);
+  --paper-line:   rgba(255, 255, 255, 0.1);
+  --ink:          var(--text);
+  --ink-soft:     var(--text-soft);
+
+  /* ── Gradientes predefinidos reutilizables ── */
+  --grad-cover:    linear-gradient(175deg, var(--night-deep) 0%, #0e1530 40%, var(--night) 100%);
+  --grad-player:    linear-gradient(180deg, var(--night-deep) 0%, var(--night) 60%, var(--night-mist) 100%);
+  --grad-section-base: linear-gradient(180deg, var(--night) 0%, var(--night-mid) 100%);
+  --grad-section-cold: linear-gradient(180deg, #0c1530 0%, var(--night) 55%, var(--night-mid) 100%);
+  --grad-section-sage: linear-gradient(180deg, #101835 0%, #182045 55%, var(--night-mid) 100%);
+  --grad-section-lavender: linear-gradient(180deg, #151033 0%, #1a1440 50%, var(--night-mid) 100%);
+  --grad-section-night: linear-gradient(180deg, var(--night-deep) 0%, var(--night-base) 70%);
+  --grad-section-goodbye: linear-gradient(180deg, var(--night-base) 0%, #090c18 100%);
+  --grad-card-player: linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
+  --grad-play:         linear-gradient(135deg, var(--powder) 0%, var(--lavender) 100%);
+  --grad-aurora-blue:  radial-gradient(circle, rgba(126,184,232,0.12), transparent 70%);
+  --grad-aurora-purple: radial-gradient(circle, rgba(179,164,214,0.10), transparent 70%);
+
+  /* ── Sombras con tono azul-morado (refinadas) ── */
+  --shadow-paper:     0 4px 32px rgba(8, 10, 22, 0.7), 0 1px 0 rgba(255,255,255,0.05) inset;
+  --shadow-card-blue:  0 8px 40px rgba(8, 10, 22, 0.55), 0 0 0 1px rgba(126,184,232,0.06), inset 0 1px 0 rgba(255,255,255,0.05);
+  --shadow-card-lavender: 0 8px 40px rgba(20, 12, 40, 0.55), 0 0 0 1px rgba(179,164,214,0.08), inset 0 1px 0 rgba(255,255,255,0.05);
+  --shadow-glow-lavender: 0 0 40px rgba(179,164,214,0.28);
+  --shadow-glow-blue:     0 0 40px rgba(126,184,232,0.22);
+  --shadow-button-glow:  0 4px 24px rgba(126,184,232,0.25), 0 0 0 1px rgba(179,164,214,0.15);
+  --shadow-envelope:   0 12px 48px rgba(10,12,24,0.75), 0 1px 0 rgba(255,255,255,0.05) inset;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html,
-body {
-  height: 100%;
-}
+html, body { height: 100%; }
 
 body {
   margin: 0;
-  background: #d9d3c6;
-  color: var(--ink);
+  background: var(--night-base);
+  color: var(--text);
   font-family: var(--font-serif), Georgia, serif;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-y: none;
@@ -52,113 +92,254 @@ body {
   justify-content: center;
 }
 
-.font-hand {
-  font-family: var(--font-hand), cursive;
-}
+.font-hand        { font-family: var(--font-hand), cursive; }
+.font-serif-page  { font-family: var(--font-serif), Georgia, serif; }
 
-.font-serif-page {
-  font-family: var(--font-serif), Georgia, serif;
-}
-
-/* subtle fibrous paper texture, generated, no external assets */
+/* ── Textura de fondo oscuro sutil ── */
 .paper-texture {
   background-image:
-    radial-gradient(rgba(59, 50, 66, 0.035) 1px, transparent 1px),
-    radial-gradient(rgba(59, 50, 66, 0.025) 1px, transparent 1px);
-  background-size: 3px 3px, 7px 7px;
-  background-position: 0 0, 1.5px 1.5px;
+    radial-gradient(rgba(179, 164, 214, 0.025) 1px, transparent 1px),
+    radial-gradient(rgba(126, 184, 232, 0.018) 1px, transparent 1px);
+  background-size: 4px 4px, 9px 9px;
+  background-position: 0 0, 2px 2px;
 }
 
-.grain-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  mix-blend-mode: multiply;
-  background-image: radial-gradient(rgba(59, 50, 66, 0.05) 1px, transparent 1.4px);
-  background-size: 3.2px 3.2px;
-}
-
+/* ── Selección de texto ── */
 ::selection {
-  background: var(--rose);
+  background: var(--lavender-dim);
   color: #fff;
 }
 
-/* scrollbar, quiet */
+/* ── Scrollbar oscuro sutil ── */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(59, 50, 66, 0.25) transparent;
+  scrollbar-color: rgba(179, 164, 214, 0.2) transparent;
 }
 
+/* ══════════════════════════════════════════════
+   KEYFRAMES
+   ══════════════════════════════════════════════ */
+
+/* Estrellas */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; }
+  50%       { opacity: 0.85; }
+}
+
+/* Luna / elementos flotantes */
+@keyframes drift {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  50%  { transform: translate(5px, -8px) rotate(3deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* Aparición suave */
+@keyframes rise-fade {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Sello de cera */
+@keyframes seal-crack {
+  0%   { transform: scale(1) rotate(0deg); }
+  40%  { transform: scale(1.15) rotate(-6deg); }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+/* Spin vinilo */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Bounce flecha */
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+
+/* Barras ecualizador */
+@keyframes eq-bar {
+  from { height: 4px; }
+  to   { height: 18px; }
+}
+
+/* ── AURORA — orbes difusos que se desplazan lentamente ── */
+@keyframes aurora-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.12; }
+  33%      { transform: translate(25px, -15px) scale(1.08); opacity: 0.18; }
+  66%      { transform: translate(-10px, 10px) scale(0.95); opacity: 0.10; }
+}
+@keyframes aurora-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.10; }
+  40%      { transform: translate(-20px, 12px) scale(1.1); opacity: 0.16; }
+  80%      { transform: translate(15px, -8px) scale(0.92); opacity: 0.08; }
+}
+@keyframes aurora-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.08; }
+  50%      { transform: translate(10px, -20px) scale(1.05); opacity: 0.14; }
+}
+
+/* ── PARTÍCULAS ── */
+@keyframes particle-rise {
+  0%   { opacity: 0; transform: translateY(0) scale(0.5); }
+  15%  { opacity: 0.9; }
+  85%  { opacity: 0.4; }
+  100% { opacity: 0; transform: translateY(-70px) scale(1.2); }
+}
+@keyframes particle-drift {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50%      { transform: translateY(-10px) translateX(5px); }
+}
+
+/* ── GLOW ── */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 0.7; }
+}
+
+/* ── FADE IN suave desde abajo ── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px) scale(0.99); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── FADE + BLUR + UP (para secciones) ── */
+@keyframes fade-up-blur {
+  from { opacity: 0; transform: translateY(26px); filter: blur(10px); }
+  60%  { filter: blur(1px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* ── FLOAT lento (para el sobre en reposo) ── */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-5px) rotate(0.4deg); }
+}
+
+/* ── SHINE sobre el sobre (brillo superior muy sutil) ── */
+@keyframes envelope-shine {
+  0%, 100% { opacity: 0.25; transform: translateX(-5%); }
+  50%      { opacity: 0.55; transform: translateX(5%); }
+}
+
+/* ── SEAL GLOW más intenso ── */
+@keyframes seal-glow-intense {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(179,164,214,0.45)); transform: scale(1); }
+  50%      { filter: drop-shadow(0 0 12px rgba(212,194,240,0.85)); transform: scale(1.04); }
+}
+
+/* ── SOFT PARALLAX muy ligero ── */
+@keyframes soft-parallax {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+/* ── APPEAR con delay (tarjeta interior del sobre) ── */
+@keyframes appear-delayed {
+  0%   { opacity: 0; transform: translateY(12px) scale(0.995); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Utilities ── */
+.animate-rise         { animation: rise-fade 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-up      { animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-up-blur { animation: fade-up-blur 0.85s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-spin-slow    { animation: spin-slow 7s linear infinite; }
+.animate-glow         { animation: glow-pulse 3s ease-in-out infinite; }
+.animate-float-slow   { animation: float-slow 7s ease-in-out infinite; }
+.animate-seal-glow    { animation: seal-glow-intense 3.2s ease-in-out infinite; }
+.animate-shine        { animation: envelope-shine 6s ease-in-out infinite; }
+
+/* ── Utility clases: card glass estilo reproductor ── */
+.card-glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-card-blue);
+}
+.card-glass-strong {
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  box-shadow: var(--shadow-card-lavender);
+}
+
+/* ── Utility: botón con hover suave ── */
+.btn-hover {
+  transition: transform 220ms cubic-bezier(.22,1,.36,1), box-shadow 220ms ease, background 220ms ease;
+}
+.btn-hover:hover {
+  transform: translateY(-1px) scale(1.015);
+  box-shadow: var(--shadow-button-glow);
+  background: var(--card-hover);
+}
+.btn-hover:active {
+  transform: translateY(0) scale(0.99);
+}
+
+/* ── Focus ring accesible ── */
+.focus-ring:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input[type="range"]:focus-visible {
+  outline: 2px solid var(--lavender-glow);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ── Accesibilidad: reduce motion (ampliado) ── */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+  }
+  .animate-fade-up-blur,
+  .animate-fade-up,
+  .animate-rise {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .float-slow, .animate-seal-glow, .animate-shine, .animate-glow,
+  .animate-spin-slow, .animate-float-slow {
+    animation: none !important;
   }
 }
 
-@keyframes twinkle {
-  0%,
-  100% {
-    opacity: 0.25;
+/* ── MOBILE-FIRST: ajustes ≤480px ── */
+@media (max-width: 480px) {
+  :root {
+    --glass-blur: blur(10px);
+    --glass-blur-strong: blur(14px);
   }
-  50% {
-    opacity: 0.9;
-  }
+  /* Decoración más pequeña en móvil */
+  .deco-reduce > * { transform: scale(0.7); transform-origin: center; }
+  /* Reducir número de estrellas visualmente */
+  .starfield-dense > span:nth-child(3n+2) { display: none; }
+  .starfield-dense > span:nth-child(5n) { display: none; }
+  /* Tamaños tipográficos más cómodos */
+  h1.font-hand { font-size: clamp(2.6rem, 10vw, 3.6rem) !important; }
+  h2.font-hand { font-size: clamp(1.8rem, 7vw, 2.3rem) !important; }
+  p.font-hand  { font-size: clamp(1.05rem, 4.5vw, 1.25rem) !important; }
 }
 
-@keyframes drift {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  50% {
-    transform: translate(6px, -10px) rotate(4deg);
-  }
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
+/* ── SMALL SCREEN: ≤380px ── */
+@media (max-width: 380px) {
+  h1.font-hand { font-size: clamp(2.2rem, 10.5vw, 3rem) !important; }
+  h2.font-hand { font-size: clamp(1.6rem, 7.5vw, 2rem) !important; }
 }
 
-@keyframes rise-fade {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ── SCROLL BEHAVIOUR: smooth nativo ── */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 12px;
 }
-
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes seal-crack {
-  0% {
-    transform: scale(1) rotate(0deg);
-  }
-  40% {
-    transform: scale(1.15) rotate(-6deg);
-  }
-  100% {
-    transform: scale(0);
-    opacity: 0;
-  }
-}
-
-.animate-rise {
-  animation: rise-fade 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 7s linear infinite;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
