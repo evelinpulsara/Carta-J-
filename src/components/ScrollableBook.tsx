@@ -586,7 +586,7 @@ function EnvelopeSection() {
     >
       <Starfield count={18} />
 
-      <p className="font-hand text-xl text-[#cfd6ea] mb-1 relative z-10">08</p>
+      <p className="font-hand text-xl text-[#cfd6ea] mb-1 relative z-10">09</p>
       <h2 className="font-hand text-4xl text-[#f4ecd8] mb-3 relative z-10">
         {pendingEnvelopeIntro.heading}
       </h2>
@@ -594,13 +594,13 @@ function EnvelopeSection() {
         {pendingEnvelopeIntro.sub}
       </p>
 
-      {/* Sobre */}
+      {/* Sobre — abre y cierra */}
       <button
-        onClick={() => setOpened(true)}
-        disabled={opened}
+        onClick={() => setOpened((v) => !v)}
         onMouseDown={() => setPressed(true)}
         onMouseUp={() => setPressed(false)}
-        aria-label="Tocar el sobre para abrirlo"
+        onMouseLeave={() => setPressed(false)}
+        aria-label={opened ? "Cerrar el sobre" : "Tocar el sobre para abrirlo"}
         className="relative w-[230px] h-[160px] mx-auto block z-10"
         style={{ perspective: "900px" }}
       >
@@ -609,7 +609,7 @@ function EnvelopeSection() {
           style={{
             background: "linear-gradient(160deg, #ece0cb, #ddcba9)",
             boxShadow: "0 14px 30px -10px rgba(0,0,0,0.45)",
-            transform: pressed && !opened ? "scale(0.98)" : "scale(1)",
+            transform: pressed ? "scale(0.98)" : "scale(1)",
             transition: "transform 0.15s ease",
           }}
         />
@@ -665,11 +665,23 @@ function EnvelopeSection() {
               </p>
             ))}
           </div>
+          {/* Botón cerrar */}
+          <button
+            onClick={() => setOpened(false)}
+            className="mt-8 mx-auto flex items-center gap-2 font-hand text-[15px] text-[#cfd6ea]/60 hover:text-[#cfd6ea] transition-colors"
+            aria-label="Cerrar el sobre"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+            cerrar el sobre
+          </button>
         </div>
       )}
     </section>
   );
 }
+
 
 /* ─── Canciones ────────────────────────────────────────────── */
 
