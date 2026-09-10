@@ -1,15 +1,14 @@
 export type ChapterId =
   | "cover"
   | "index"
-  | "never-said"
-  | "what-happened"
-  | "what-i-learned"
-  | "about-eli"
-  | "memories"
-  | "soundtrack"
-  | "fragments"
-  | "envelope"
-  | "last-page";
+  | "beginning"
+  | "after"
+  | "new-me"
+  | "curious-fact"
+  | "elizabeth"
+  | "before-leaving"
+  | "thanks-sorry"
+  | "clarification";
 
 export type TocIcon =
   | "letter"
@@ -32,68 +31,61 @@ export interface ChapterEntry {
 
 export const chapters: ChapterEntry[] = [
   {
-    id: "never-said",
+    id: "beginning",
     number: "01",
-    title: "Lo que nunca dije",
-    teaser: "Hay cosas que se quedan dentro incluso cuando una historia termina.",
+    title: "Comienzo",
+    teaser: "La vida a veces pone en nuestro camino personas especiales.",
     icon: "letter",
   },
   {
-    id: "what-happened",
+    id: "after",
     number: "02",
-    title: "Lo que pasó",
-    teaser: "Entre el amor, el miedo y las heridas que todavía no sabía sanar.",
+    title: "Lo que pasó después",
+    teaser: "Del dolor que alguna vez sentí, aprendí a sanar.",
     icon: "leaf",
   },
   {
-    id: "what-i-learned",
+    id: "new-me",
     number: "03",
-    title: "Lo que aprendí",
-    teaser: "Perderte no fue lo que me enseñó a valorarte. Fue lo que me enseñó a entenderme.",
+    title: "La versión de mí que no conoces",
+    teaser: "Tal vez tú solo tengas el peor recuerdo de mí.",
     icon: "sprout",
   },
   {
-    id: "about-eli",
+    id: "curious-fact",
     number: "04",
-    title: "Sobre Eli",
+    title: "Dato Curioso",
+    teaser: "¿Puedes creer que un día le pedí a la luna que me ayudara?",
+    icon: "star",
+  },
+  {
+    id: "elizabeth",
+    number: "05",
+    title: "Elizabeth",
     teaser: "Una pequeña historia que también quedó pendiente.",
     icon: "moon",
   },
   {
-    id: "memories",
-    number: "05",
-    title: "Recuerdos",
-    teaser: "Porque algunas cosas merecen ser recordadas sin necesidad de querer volver.",
-    icon: "photos",
-  },
-  {
-    id: "soundtrack",
+    id: "before-leaving",
     number: "06",
-    title: "Nuestra banda sonora",
-    teaser: "Canciones que alguna vez tuvieron tu nombre.",
+    title: "Lo que quería decirte antes de irme",
+    teaser: "Sé feliz, corazón de melón.",
     icon: "note",
   },
   {
-    id: "fragments",
+    id: "thanks-sorry",
     number: "07",
-    title: "Fragmentos",
-    teaser: "Pequeñas palabras que todavía guardan algo de aquella época.",
-    icon: "star",
+    title: "Gracias y Perdón",
+    teaser: "Fuiste y serás mi mayor motivación en mi vida.",
+    icon: "photos",
   },
   {
-    id: "envelope",
+    id: "clarification",
     number: "08",
-    title: "Un sobre pendiente",
-    teaser: "Hay algo más que también necesitaba decir.",
+    title: "Aclaración",
+    teaser: "Abrir bajo tu propia responsabilidad.",
     icon: "seal",
     locked: true,
-  },
-  {
-    id: "last-page",
-    number: "09",
-    title: "Última página",
-    teaser: "Y aquí es donde dejo esta historia.",
-    icon: "star",
   },
 ];
 
