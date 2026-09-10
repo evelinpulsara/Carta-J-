@@ -8,6 +8,7 @@ export type ChapterId =
   | "elizabeth"
   | "before-leaving"
   | "thanks-sorry"
+  | "songs"
   | "clarification";
 
 export type TocIcon =
@@ -18,7 +19,8 @@ export type TocIcon =
   | "photos"
   | "note"
   | "star"
-  | "seal";
+  | "seal"
+  | "music";
 
 export interface ChapterEntry {
   id: ChapterId;
@@ -80,8 +82,15 @@ export const chapters: ChapterEntry[] = [
     icon: "photos",
   },
   {
-    id: "clarification",
+    id: "songs",
     number: "08",
+    title: "Canciones que me recordaron a ti",
+    teaser: "Hay canciones que no hablan de ti, pero me recuerdan a ti.",
+    icon: "music",
+  },
+  {
+    id: "clarification",
+    number: "09",
     title: "Aclaración",
     teaser: "Abrir bajo tu propia responsabilidad.",
     icon: "seal",

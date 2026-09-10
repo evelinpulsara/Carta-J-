@@ -433,9 +433,15 @@ function ChapterIcon({ icon }: { icon: TocIcon }) {
       return <svg {...common}><circle cx="7" cy="18" r="2.5" /><path d="M9.5 18V6l9-2v11" /></svg>;
     case "seal":
       return <svg {...common}><circle cx="12" cy="12" r="8" /><path d="M12 8v4l3 2" /></svg>;
+    case "music":
+      return <svg {...common}><circle cx="7" cy="18" r="2.5" /><circle cx="17" cy="16" r="2.5" /><path d="M9.5 18V7l10-2v9" /></svg>;
     default:
       return <svg {...common}><path d="M12 3l2.6 5.6L21 9.3l-4.5 4 1.3 6.2L12 16.8 6.2 19.5l1.3-6.2L3 9.3l6.4-.7z" /></svg>;
   }
+}
+
+function scrollTo(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function TableOfContents() {
@@ -443,6 +449,7 @@ function TableOfContents() {
   return (
     <section
       ref={ref}
+      id="index"
       className="relative w-full px-5 pt-20 pb-14 paper-texture"
       style={{
         background: "var(--paper)",
@@ -463,11 +470,13 @@ function TableOfContents() {
       <ul className="flex flex-col gap-3 max-w-[500px] mx-auto">
         {chapters.map((c) => (
           <li key={c.id}>
-            <div
-              className={`w-full text-left rounded-lg border px-4 py-3.5 ${c.locked
+            <button
+              onClick={() => scrollTo(c.id)}
+              className={`w-full text-left rounded-lg border px-4 py-3.5 transition-transform active:scale-[0.98] ${
+                c.locked
                   ? "border-[var(--rose-deep)]/30"
                   : "border-[var(--paper-line)]"
-                }`}
+              }`}
               style={{
                 background: c.locked
                   ? "linear-gradient(135deg, #f2e2dd, #ecd6cf)"
@@ -496,7 +505,7 @@ function TableOfContents() {
                   </p>
                 </div>
               </div>
-            </div>
+            </button>
           </li>
         ))}
       </ul>
@@ -515,6 +524,7 @@ const tintBg: Record<string, string> = {
 };
 
 function LetterSection({
+  id,
   number,
   title,
   paragraphs,
@@ -522,6 +532,7 @@ function LetterSection({
   quiet = false,
   children,
 }: {
+  id: string;
   number: string;
   title: string;
   paragraphs: string[];
@@ -532,6 +543,7 @@ function LetterSection({
   const { ref, visible } = useFadeIn();
   return (
     <section
+      id={id}
       ref={ref}
       className="relative w-full px-6 pt-20 pb-16 paper-texture"
       style={{
@@ -575,6 +587,7 @@ function EnvelopeSection() {
 
   return (
     <section
+      id="clarification"
       ref={ref}
       className="relative w-full px-6 pt-20 pb-20 flex flex-col items-center text-center"
       style={{
@@ -690,6 +703,7 @@ function SongsSection() {
   const allSongs = [...songsThatRemindMeOfYou, ...songsThatHelpedMeLetGo];
   return (
     <section
+      id="songs"
       ref={ref}
       className="relative w-full px-6 pt-20 pb-16 paper-texture"
       style={{
@@ -704,9 +718,9 @@ function SongsSection() {
 
       <div className="max-w-[42ch] mx-auto">
         {/* Cabecera */}
-        <p className="font-hand text-xl text-[var(--ink-soft)] mb-1">08</p>
+        <p className="font-hand text-xl text-[var(--ink-soft)] mb-1">𐔌՞ ܸ.ˬ.ܸ՞𐦯</p>
         <h2 className="font-hand text-3xl text-[var(--ink)] mb-2 leading-tight">
-          Nuestra banda sonora
+          Canciones que me recordaron a ti
         </h2>
         <p
           className="font-serif-page italic text-[14px] mb-8"
@@ -786,6 +800,7 @@ export default function ScrollableBook() {
 
         {/* 01 · Comienzo */}
         <LetterSection
+          id="beginning"
           number="01"
           title="Comienzo"
           paragraphs={comienzo}
@@ -794,6 +809,7 @@ export default function ScrollableBook() {
 
         {/* 02 · Lo que pasó después */}
         <LetterSection
+          id="after"
           number="02"
           title="Lo que pasó después"
           paragraphs={loquePasoDespues}
@@ -802,6 +818,7 @@ export default function ScrollableBook() {
 
         {/* 03 · La versión de mí que no conoces */}
         <LetterSection
+          id="new-me"
           number="03"
           title="La versión de mí que no conoces"
           paragraphs={laVersionDeMi}
@@ -813,6 +830,7 @@ export default function ScrollableBook() {
 
         {/* 04 · Dato Curioso */}
         <LetterSection
+          id="curious-fact"
           number="04"
           title="Dato Curioso"
           paragraphs={datoCurioso}
@@ -821,6 +839,7 @@ export default function ScrollableBook() {
 
         {/* 05 · Elizabeth */}
         <LetterSection
+          id="elizabeth"
           number="05"
           title="Elizabeth"
           paragraphs={elizabethContent}
@@ -832,6 +851,7 @@ export default function ScrollableBook() {
 
         {/* 06 · Lo que quería decirte antes de irme */}
         <LetterSection
+          id="before-leaving"
           number="06"
           title="Lo que quería decirte antes de irme"
           paragraphs={antesDeIrme}
@@ -840,6 +860,7 @@ export default function ScrollableBook() {
 
         {/* 07 · Gracias y Perdón */}
         <LetterSection
+          id="thanks-sorry"
           number="07"
           title="Gracias y Perdón"
           paragraphs={graciasPerdón}
