@@ -114,6 +114,302 @@ function Cover() {
   );
 }
 
+/* ─── Reproductor de Música ────────────────────────────────── */
+
+function MusicPlayer() {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(0.8);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const { ref, visible } = useFadeIn(0.08);
+
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleTimeUpdate = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    setCurrentTime(audio.currentTime);
+  };
+
+  const handleLoadedMetadata = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    setDuration(audio.duration);
+    setIsLoaded(true);
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const newTime = Number(e.target.value);
+    audio.currentTime = newTime;
+    setCurrentTime(newTime);
+  };
+
+  const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const v = Number(e.target.value);
+    audio.volume = v;
+    setVolume(v);
+  };
+
+  const handleEnded = () => setIsPlaying(false);
+
+  const fmt = (s: number) => {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2, "0")}`;
+  };
+
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+
+  return (
+    <section
+      ref={ref}
+      className="relative w-full px-5 py-12 flex flex-col items-center"
+      style={{
+        background:
+          "linear-gradient(180deg, var(--night-deep) 0%, var(--night) 60%, #2e3854 100%)",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(24px)",
+        transition: "opacity 0.8s ease, transform 0.8s ease",
+      }}
+    >
+      <Starfield count={14} />
+
+      {/* Título */}
+      <p
+        className="font-hand text-[15px] tracking-widest uppercase mb-6 relative z-10"
+        style={{ color: "var(--powder)", opacity: 0.7, letterSpacing: "0.18em" }}
+      >
+        ♪ nuestra canción
+      </p>
+
+      <audio
+        ref={audioRef}
+        src="/audio/canción.mp3"
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+        onEnded={handleEnded}
+        preload="metadata"
+      />
+
+      {/* Card del reproductor */}
+      <div
+        className="relative z-10 w-full max-w-[340px] rounded-2xl overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%)",
+          border: "1px solid rgba(169,193,221,0.18)",
+          boxShadow:
+            "0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08)",
+          backdropFilter: "blur(16px)",
+        }}
+      >
+        {/* Portada */}
+        <div className="relative w-full" style={{ aspectRatio: "1/1" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/img/portada.jpg"
+            alt="Portada"
+            className="w-full h-full object-cover"
+            style={{ display: "block" }}
+          />
+          {/* Overlay degradado suave sobre la imagen */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, transparent 55%, rgba(20,26,48,0.85) 100%)",
+            }}
+          />
+          {/* Indicador de reproducción flotante */}
+          {isPlaying && (
+            <div
+              className="absolute bottom-3 right-3 flex items-end gap-[3px]"
+              style={{ height: 20 }}
+            >
+              {[1, 2, 3, 4].map((i) => (
+                <span
+                  key={i}
+                  style={{
+                    display: "block",
+                    width: 3,
+                    borderRadius: 2,
+                    background: "var(--powder)",
+                    animation: `eq-bar ${0.6 + i * 0.15}s ease-in-out infinite alternate`,
+                    animationDelay: `${i * 0.1}s`,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Controles */}
+        <div className="px-5 pt-4 pb-5 flex flex-col gap-3">
+          {/* Barra de progreso */}
+          <div className="flex flex-col gap-1">
+            <div className="relative w-full h-1.5 rounded-full" style={{ background: "rgba(169,193,221,0.2)" }}>
+              <div
+                className="absolute left-0 top-0 h-full rounded-full"
+                style={{
+                  width: `${progress}%`,
+                  background:
+                    "linear-gradient(90deg, var(--powder), var(--lavender))",
+                  transition: "width 0.3s linear",
+                }}
+              />
+              <input
+                type="range"
+                min={0}
+                max={duration || 0}
+                step={0.1}
+                value={currentTime}
+                onChange={handleSeek}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                aria-label="Progreso de la canción"
+              />
+            </div>
+            <div className="flex justify-between" style={{ fontSize: 11, color: "var(--powder)", opacity: 0.65 }}>
+              <span className="font-serif-page">{fmt(currentTime)}</span>
+              <span className="font-serif-page">{isLoaded ? fmt(duration) : "--:--"}</span>
+            </div>
+          </div>
+
+          {/* Botón play/pause central */}
+          <div className="flex items-center justify-center gap-5 mt-1">
+            {/* Retroceder 10s */}
+            <button
+              onClick={() => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, currentTime - 10); }}
+              aria-label="Retroceder 10 segundos"
+              style={{
+                background: "rgba(169,193,221,0.1)",
+                border: "1px solid rgba(169,193,221,0.2)",
+                borderRadius: "50%",
+                width: 40, height: 40,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "var(--powder)",
+                cursor: "pointer",
+                transition: "background 0.2s",
+              }}
+            >
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                <path d="M3 3v5h5" />
+                <text x="8" y="15.5" fontSize="6" fill="currentColor" stroke="none" fontFamily="sans-serif">10</text>
+              </svg>
+            </button>
+
+            {/* Play / Pause */}
+            <button
+              onClick={togglePlay}
+              aria-label={isPlaying ? "Pausar" : "Reproducir"}
+              style={{
+                width: 62, height: 62,
+                borderRadius: "50%",
+                border: "none",
+                cursor: "pointer",
+                background:
+                  "linear-gradient(135deg, var(--powder) 0%, var(--lavender) 100%)",
+                boxShadow: isPlaying
+                  ? "0 0 24px rgba(169,193,221,0.55), 0 4px 16px rgba(0,0,0,0.35)"
+                  : "0 4px 16px rgba(0,0,0,0.35)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                transition: "box-shadow 0.3s, transform 0.15s",
+                transform: "scale(1)",
+                color: "var(--night-deep)",
+              }}
+            >
+              {isPlaying ? (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="6" y="4" width="4" height="16" rx="1" />
+                  <rect x="14" y="4" width="4" height="16" rx="1" />
+                </svg>
+              ) : (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style={{ marginLeft: 3 }}>
+                  <path d="M5 3l14 9-14 9V3z" />
+                </svg>
+              )}
+            </button>
+
+            {/* Avanzar 10s */}
+            <button
+              onClick={() => { if (audioRef.current) audioRef.current.currentTime = Math.min(duration, currentTime + 10); }}
+              aria-label="Avanzar 10 segundos"
+              style={{
+                background: "rgba(169,193,221,0.1)",
+                border: "1px solid rgba(169,193,221,0.2)",
+                borderRadius: "50%",
+                width: 40, height: 40,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "var(--powder)",
+                cursor: "pointer",
+                transition: "background 0.2s",
+              }}
+            >
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                <path d="M21 3v5h-5" />
+                <text x="8" y="15.5" fontSize="6" fill="currentColor" stroke="none" fontFamily="sans-serif">10</text>
+              </svg>
+            </button>
+          </div>
+
+          {/* Volumen */}
+          <div className="flex items-center gap-2 mt-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" style={{ color: "var(--powder)", opacity: 0.6, flexShrink: 0 }}>
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              {volume > 0.5 && <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />}
+              {volume > 0 && <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />}
+            </svg>
+            <div className="relative flex-1 h-1 rounded-full" style={{ background: "rgba(169,193,221,0.2)" }}>
+              <div
+                className="absolute left-0 top-0 h-full rounded-full"
+                style={{
+                  width: `${volume * 100}%`,
+                  background: "var(--powder)",
+                  opacity: 0.7,
+                }}
+              />
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step={0.01}
+                value={volume}
+                onChange={handleVolume}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                aria-label="Volumen"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Keyframes for eq bars */}
+      <style>{`
+        @keyframes eq-bar {
+          from { height: 4px; }
+          to   { height: 18px; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
 /* ─── Índice ───────────────────────────────────────────────── */
 
 function ChapterIcon({ icon }: { icon: TocIcon }) {
@@ -391,6 +687,9 @@ export default function ScrollableBook() {
       <main className="w-full max-w-[520px] mx-auto min-h-dvh">
         {/* Portada */}
         <Cover />
+
+        {/* Reproductor de música */}
+        <MusicPlayer />
 
         {/* Índice */}
         <TableOfContents />
