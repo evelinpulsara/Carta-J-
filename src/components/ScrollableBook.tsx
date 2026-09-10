@@ -23,7 +23,7 @@ import {
   pendingEnvelopeIntro,
   pendingEnvelopeReveal,
 } from "@/data/content";
-import { songsThatRemindMeOfYou, songsThatHelpedMeLetGo, Song } from "@/data/songs";
+import { songsThatRemindMeOfYou, songsThatHelpedMeLetGo } from "@/data/songs";
 
 /* ─── renderText: convierte **bold** en <strong> ──────────── */
 
@@ -673,34 +673,9 @@ function EnvelopeSection() {
 
 /* ─── Canciones ────────────────────────────────────────────── */
 
-function SongRow({ song }: { song: Song }) {
-  return (
-    <li
-      className="flex items-center gap-3 py-3 border-b last:border-0"
-      style={{ borderColor: "var(--paper-line)" }}
-    >
-      <svg
-        width="15" height="15" viewBox="0 0 24 24" fill="none"
-        className="shrink-0"
-        style={{ color: "var(--ink-soft)" }}
-      >
-        <circle cx="7" cy="18" r="2.5" stroke="currentColor" strokeWidth="1.4" />
-        <path d="M9.5 18V6l9-2v11" stroke="currentColor" strokeWidth="1.4" />
-      </svg>
-      <div className="min-w-0 flex-1">
-        <p className="font-serif-page text-[15px] truncate" style={{ color: "var(--ink)" }}>
-          {song.title}
-        </p>
-        <p className="font-serif-page italic text-[12.5px] truncate" style={{ color: "var(--ink-soft)" }}>
-          {song.artist}
-        </p>
-      </div>
-    </li>
-  );
-}
-
 function SongsSection() {
   const { ref, visible } = useFadeIn();
+  const allSongs = [...songsThatRemindMeOfYou, ...songsThatHelpedMeLetGo];
   return (
     <section
       ref={ref}
@@ -729,34 +704,7 @@ function SongsSection() {
           <br />pero inevitablemente me recuerdan a ti.
         </p>
 
-        {/* Lista: las que me recuerdan a él */}
-        <div
-          className="rounded-xl p-4 mb-6"
-          style={{
-            background: "rgba(255,255,255,0.5)",
-            boxShadow: "var(--shadow-paper)",
-          }}
-        >
-          <h3
-            className="font-hand text-2xl mb-1"
-            style={{ color: "var(--ink)" }}
-          >
-            Las que me recuerdan a ti
-          </h3>
-          <p
-            className="font-serif-page italic text-[12.5px] mb-3"
-            style={{ color: "var(--ink-soft)" }}
-          >
-            cada una tiene una historia
-          </p>
-          <ul>
-            {songsThatRemindMeOfYou.map((s, i) => (
-              <SongRow key={i} song={s} />
-            ))}
-          </ul>
-        </div>
-
-        {/* Lista: las que me ayudaron a soltar */}
+        {/* Lista única con animación staggered */}
         <div
           className="rounded-xl p-4"
           style={{
@@ -764,36 +712,43 @@ function SongsSection() {
             boxShadow: "var(--shadow-paper)",
           }}
         >
-          <h3
-            className="font-hand text-2xl mb-1"
-            style={{ color: "var(--ink)" }}
-          >
-            Las que me ayudaron a seguir
-          </h3>
-          <p
-            className="font-serif-page italic text-[12.5px] mb-3"
-            style={{ color: "var(--ink-soft)" }}
-          >
-            sanar también tiene su soundtrack
-          </p>
           <ul>
-            {songsThatHelpedMeLetGo.map((s, i) => (
-              <SongRow key={i} song={s} />
+            {allSongs.map((s, i) => (
+              <li
+                key={i}
+                className="flex items-center gap-3 py-3 border-b last:border-0"
+                style={{
+                  borderColor: "var(--paper-line)",
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateX(0)" : "translateX(-16px)",
+                  transition: `opacity 0.5s ease ${0.2 + i * 0.08}s, transform 0.5s ease ${0.2 + i * 0.08}s`,
+                }}
+              >
+                <svg
+                  width="15" height="15" viewBox="0 0 24 24" fill="none"
+                  className="shrink-0"
+                  style={{ color: "var(--lavender)" }}
+                >
+                  <circle cx="7" cy="18" r="2.5" stroke="currentColor" strokeWidth="1.4" />
+                  <path d="M9.5 18V6l9-2v11" stroke="currentColor" strokeWidth="1.4" />
+                </svg>
+                <div className="min-w-0 flex-1">
+                  <p className="font-serif-page text-[15px] truncate" style={{ color: "var(--ink)" }}>
+                    {s.title}
+                  </p>
+                  <p className="font-serif-page italic text-[12.5px] truncate" style={{ color: "var(--ink-soft)" }}>
+                    {s.artist}
+                  </p>
+                </div>
+              </li>
             ))}
           </ul>
         </div>
-
-        {/* Cierre poético */}
-        <p
-          className="font-hand text-lg text-center mt-8"
-          style={{ color: "var(--ink-soft)" }}
-        >
-          …y a veces la música dice lo que las palabras no pueden
-        </p>
       </div>
     </section>
   );
 }
+
 
 /* ─── Componente principal ─────────────────────────────────── */
 
